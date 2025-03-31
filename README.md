@@ -64,30 +64,55 @@ anomaly-nsl-kdd/
 ├── requirements.txt
 
 ├── .gitignore
+
 │
+
 ├── data/
+
 │   ├── README.md
+
 │   ├── raw/
+
 │   └── processed/
+
 │
+
 ├── notebooks/
+
 │   ├── 01_exploration.ipynb
+
 │   ├── 02_feature_engineering.ipynb
+
 │   ├── 03_modeling.ipynb
+
 │   └── 04_evaluation.ipynb
+
 │
+
 ├── src/
+
 │   ├── __init__.py
+
 │   ├── data_prep.py
+
 │   ├── modeling.py
+
 │   └── utils.py
+
 │
+
 ├── reports/
+
 │   ├── figures/
+
 │   └── summary.md
+
 │
+
 └── app/
+
     └── streamlit_app.py  # Optional for dashboard deployment
+    
 
 
 ---
