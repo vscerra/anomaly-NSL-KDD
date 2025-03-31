@@ -58,8 +58,11 @@ _(WIP: to be updated as experiments are run)_
 ## 🗂️ Repo Structure
 anomaly-nsl-kdd/
 │
+
 ├── README.md
+
 ├── requirements.txt
+
 ├── .gitignore
 │
 ├── data/
