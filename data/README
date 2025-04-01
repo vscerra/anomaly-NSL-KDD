@@ -1,0 +1,12 @@
+# 📁 data/
+
+This folder is used to store dataset files used in this project.
+
+The original NSL-KDD dataset can be downloaded from:
+
+👉 https://www.unb.ca/cic/datasets/nsl.html
+
+Once downloaded, place the following files here:
+
+- `KDDTrain+.txt`
+- `KDDTest+.txt` (optional)
