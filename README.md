@@ -1,10 +1,10 @@
-# 🔐 Anomaly Detection on the NSL-KDD Dataset
+# Anomaly Detection on the NSL-KDD Dataset
 
 A hands-on exploration of classical and deep learning techniques for identifying network intrusions.
 
 ---
 
-## 📌 Overview
+## Overview
 
 This project applies and compares multiple anomaly detection techniques on the NSL-KDD dataset — a benchmark dataset for network intrusion detection. It includes exploratory data analysis, feature engineering, classical machine learning models, and deep learning architectures. The project also serves as a reusable template for structuring future anomaly detection work.
 
@@ -12,7 +12,7 @@ Along the way, I’m building personal fluency with both the conceptual underpin
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 - **Name**: NSL-KDD (derived from KDD’99)
 - **Source**: [UNB CIC Repository](https://www.unb.ca/cic/datasets/nsl.html)
@@ -22,7 +22,7 @@ Along the way, I’m building personal fluency with both the conceptual underpin
 
 ---
 
-## 🧪 Methods Explored
+## Methods Explored
 
 | Method              | Category         | Tools Used            |
 |---------------------|------------------|------------------------|
@@ -34,7 +34,7 @@ Along the way, I’m building personal fluency with both the conceptual underpin
 
 ---
 
-## 🎯 Learning Objectives
+## Learning Objectives
 
 - Understand key categories of anomaly detection
 - Evaluate performance of classical vs. deep learning models
@@ -43,7 +43,7 @@ Along the way, I’m building personal fluency with both the conceptual underpin
 
 ---
 
-## 📈 Results Snapshot
+## Results Snapshot
 
 _(WIP: to be updated as experiments are run)_
 
@@ -55,7 +55,7 @@ _(WIP: to be updated as experiments are run)_
 
 ---
 
-## 🗂️ Repo Structure
+## Repo Structure
 anomaly-nsl-kdd/
 │
 
@@ -117,7 +117,7 @@ anomaly-nsl-kdd/
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ```bash
 # Clone the repository
