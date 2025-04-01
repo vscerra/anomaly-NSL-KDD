@@ -8,18 +8,16 @@ A hands-on exploration of classical and deep learning techniques for identifying
 
 This project applies and compares multiple anomaly detection techniques on the NSL-KDD dataset — a benchmark dataset for network intrusion detection. It includes exploratory data analysis, feature engineering, classical machine learning models, and deep learning architectures. The project also serves as a reusable template for structuring future anomaly detection work.
 
-Along the way, I’m building personal fluency with both the conceptual underpinnings and practical implementations of anomaly detection — making this a dual-purpose learning and portfolio project.
-
 ---
 
 ## Dataset
 
 - **Name**: NSL-KDD (derived from KDD’99)
 - **Source**: [UNB CIC Repository](https://www.unb.ca/cic/datasets/nsl.html)
-- **Size**: ~125,000 rows, 41 features
+- **Size**: ~125,000 rows, 43 features
 - **Task**: Binary anomaly detection (normal vs. attack) with multiclass subtype labels
 - **Why it’s interesting**: NSL-KDD is widely used for network intrusion detection benchmarking and includes a range of attack types under realistic conditions of class imbalance.
-
+- **NOTE** : The dataset is not included in this repository due to size. Please download it directly from the official source above. 
 ---
 
 ## Methods Explored
