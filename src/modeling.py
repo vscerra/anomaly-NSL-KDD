@@ -71,7 +71,7 @@ def evaluate_unsupervised_model(model, X_test, y_test):
 
 # Deep learning: Autoencoder architecture in Keras
 
-def build_autoencoder(input_dim, encoding_dim=16):
+def build_autoencoder(input_dim, encoding_dim=32):
     """
     Define an autoencoder architecture with customizable bottleneck
     """
