@@ -4,14 +4,6 @@ Created on Thu Apr  3 11:23:30 2025
 
 @author: vscerra
 """
-import numpy as np
-import pandas as pd
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.optimizers import Adam
-
-from src.modeling import build_autoencoder
-
 def run_autoencoder_experiment(
     X_train_normal,
     X_test,
@@ -21,12 +13,25 @@ def run_autoencoder_experiment(
     learning_rate = 1e-4,
     epochs = 100,
     batch_size = 128, 
-    threshold_percentile = 99,
     verbose = 0
     ):
     """ 
     Trains and evaluates an autoencoder anomaly detector and returns metrics
     """
+    
+    import numpy as np
+    from sklearn.metrics import (
+      accuracy_score, 
+      precision_score, 
+      recall_score, 
+      f1_score,
+      precision_recall_curve
+      )
+
+    from tensorflow.keras.callbacks import EarlyStopping
+    from tensorflow.keras.optimizers import Adam
+    from src.modeling import build_autoencoder
+
     input_dim = X_train_normal.shape[1]
     
     # build model
@@ -49,17 +54,16 @@ def run_autoencoder_experiment(
         callbacks = [early_stop]
         )
     
-    # get reconstruction error on test set
+    # Inference - get reconstruction error on test set
     X_test_pred = autoencoder.predict(X_test, verbose = 0)
     recon_error = np.mean(np.square(X_test - X_test_pred), axis = 1)
     
-    # use threshold from training reconstruction error
-    train_recon = autoencoder.predict(X_train_normal, verbose = 0)
-    train_error = np.mean(np.square(X_train_normal - train_recon), axis = 1)
-    threshold = np.percentile(train_error,  threshold_percentile)
-    
-    # predict
-    y_pred = (recon_error > threshold).astype(int)
+    # Optimal threshold selector - use threshold from training reconstruction error
+    precision, recall, thresholds = precision_recall_curve(y_test, recon_error)
+    f1_scores = 2 * (precision * recall) / (precision + recall + 1e-8)
+    best_idx = np.argmax(f1_scores)
+    best_threshold = thresholds[best_idx]
+    y_pred = (recon_error > best_threshold).astype(int)
     
     # metrics
     metrics= {
@@ -67,11 +71,11 @@ def run_autoencoder_experiment(
         "dropout": dropout_rate,
         "lr": learning_rate,
         "epochs_run": len(history.history["loss"]),
-        "f1": f1_score(y_test, y_pred),
-        "recall": recall_score(y_test, y_pred),
-        "precision": precision_score(y_test, y_pred),
+        "f1": f1_scores[best_idx],
+        "recall": recall[best_idx],
+        "precision": precision[best_idx],
         "accuracy": accuracy_score(y_test, y_pred),
-        "threshold": threshold
+        "threshold": best_threshold
         }
     
-    return metrics
+    return autoencoder, metrics, recon_error, y_pred
