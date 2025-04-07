@@ -70,7 +70,7 @@ def encode_nsl_kdd(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def normalize_features(df: pd.DataFrame, method: str = 'minmax') -> pd.DataFrame:
+def normalize_features(df: pd.DataFrame, method: str = 'standard') -> pd.DataFrame:
     """
     Normalize numerical features using MinMaxScaler or StandardScaling
     Parameters:
@@ -84,9 +84,9 @@ def normalize_features(df: pd.DataFrame, method: str = 'minmax') -> pd.DataFrame
     numeric_cols = df.select_dtypes(include = np.number).columns.tolist()
     numeric_cols = [col for col in numeric_cols if col != 'binary_label'] # to skip the target column
     
-    scaler = MinMaxScaler() if method == 'minmax' else StandardScaler()
+    scaler = StandardScaler() if method == 'standard' else MinMaxScaler()
     df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
-    return df
+    return df, scaler
   
   
 def select_features_variance(df: pd.DataFrame, threshold: float = 0.01) -> pd.DataFrame:
@@ -137,7 +137,11 @@ def preprocess_nsl_kdd(
     apply_variance_filter: bool = True,
     variance_threshold: float = 0.01,
     apply_corr_filter: bool = True,
-    corr_threshold: float = 0.9) -> pd.DataFrame:
+    corr_threshold: float = 0.9,
+    align_to_columns_path: str = None,
+    scaler_path: str = None, # used to save or load scaler
+    fit_scaler: bool = True # True if training, false if reusing
+    ) -> pd.DataFrame:
     """
     Full preprocessing pipeline for NSL-KDD dataset
     Parameters: 
@@ -152,6 +156,7 @@ def preprocess_nsl_kdd(
        pd.DataFrame: Fully preprocessed dataset
     """
     from src.utils import simplify_labels
+    import joblib
     
     df = load_nsl_kdd(path)
     df = clean_nsl_kdd(df)
@@ -159,11 +164,23 @@ def preprocess_nsl_kdd(
     df = simplify_labels(df)
     
     if normalize:
-        df = normalize_features(df, method = 'standard')
+        if fit_scaler:
+            df, scaler_obj = normalize_features(df, method = scaler)
+            if scaler_path:
+                joblib.dump(scaler_obj, scaler_path)
+        else:
+            scaler_obj = joblib.load(scaler_path)
+            numeric_cols = df.select_dtypes(include=np.number).drop(columns=['binary_label'], errors='ignore').columns
+            df[numeric_cols] = scaler_obj.transform(df[numeric_cols])
+    
     if apply_variance_filter:
         df = select_features_variance(df, threshold = variance_threshold)
     if apply_corr_filter:
         df = select_features_corr(df, threshold = corr_threshold)
+        
+    if align_to_columns_path:
+      feature_columns = joblib.load(align_to_columns_path)
+      df = df.reindex(columns = feature_columns, fill_value = 0)
         
     return df
   
