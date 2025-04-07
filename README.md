@@ -45,11 +45,11 @@ This project applies and compares multiple anomaly detection techniques on the N
 
 _(WIP: to be updated as experiments are run)_
 
-| Model             | ROC-AUC | Precision | Recall | F1   |
-|------------------|---------|-----------|--------|------|
-| Logistic Reg.     | TBD     | TBD       | TBD    | TBD  |
-| Isolation Forest  | TBD     | TBD       | TBD    | TBD  |
-| Autoencoder       | TBD     | TBD       | TBD    | TBD  |
+| Model             | Accuracy | Precision | Recall | F1   |
+|-------------------|----------|-----------|--------|------|
+| Logistic Reg.     | 0.743    | 0.953     | 0.577  | 0.719|
+| Isolation Forest  | 0.569    | 0.569     | 1.00   | 0.725|
+| Autoencoder       | 0.817    | 0.922     | 0.742  | 0.822|
 
 ---
 
